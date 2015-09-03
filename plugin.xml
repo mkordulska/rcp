@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Sample Category"
+            id="com.starterkit.rcp.view">
+      </category>
+      <view
+            name="Sample View"
+            icon="icons/sample.gif"
+            category="com.starterkit.rcp.view"
+            class="com.starterkit.rcp.view.views.SampleView"
+            id="com.starterkit.rcp.view.views.SampleView">
+      </view>
+      <view
+            class="com.starterkit.rcp.view.ToDoView"
+            id="com.starterkit.rcp.view.view1"
+            name="ToDo View"
+            restorable="true">
+      </view>
+      <view
+            class="com.starterkit.rcp.view.DoneView"
+            id="com.starterkit.rcp.view.view2"
+            name="Done View"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="com.starterkit.rcp.view.perspective1">
+         <view
+               id="com.starterkit.rcp.view.view1"
+               minimized="false"
+               ratio="0.95"
+               relationship="left"
+               relative="com.starterkit.rcp.view.view2">
+         </view>
+         <view
+               id="com.starterkit.rcp.view.view2"
+               minimized="false"
+               ratio="0.5"
+               relationship="right"
+               relative="com.starterkit.rcp.view.view1">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml">
+      </contexts>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="com.starterkit.rcp.view.ToDoPerspective"
+            id="com.starterkit.rcp.view.perspective1"
+            name="ToDo Perspective">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="com.starterkit.rcp.view.command1"
+            name="Task">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="com.starterkit.view.handlers.MyAction"
+            commandId="com.starterkit.rcp.view.command1">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <menu
+               label="Task">
+            <command
+                  commandId="com.starterkit.rcp.view.command1"
+                  label="Add task"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+
+</plugin>
