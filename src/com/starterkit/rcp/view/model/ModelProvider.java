@@ -3,6 +3,7 @@ package com.starterkit.rcp.view.model;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public enum ModelProvider {
@@ -33,7 +34,10 @@ public enum ModelProvider {
 	}
 	
 	public void removeTask(Task task){
-		firePropertyChange("tasks", tasks, tasks.remove(tasks.indexOf(task)));
+		List<Task> oldTasks = new ArrayList<>();
+		oldTasks.addAll(tasks);
+		tasks.remove(tasks.indexOf(task));
+		firePropertyChange("tasks", oldTasks, tasks);
 	}
 	
 

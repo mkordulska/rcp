@@ -10,13 +10,14 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
 
 import com.starterkit.rcp.view.model.ModelProvider;
 import com.starterkit.rcp.view.model.Task;
 
-public class MyAction implements IHandler {
+public class AddTask implements IHandler {
 
 	@Override
 	public void addHandlerListener(IHandlerListener handlerListener) {
@@ -42,10 +43,12 @@ public class MyAction implements IHandler {
 					}
 				});
 		inputDialog.create();
-		inputDialog.open();
-		Task task = new Task(inputDialog.getValue(), false);
-		
-		ModelProvider.INSTANCE.addTask(task);
+		// inputDialog.open();
+
+		if (inputDialog.open() == Window.OK) {
+			Task task = new Task(inputDialog.getValue(), false);
+			ModelProvider.INSTANCE.addTask(task);
+		}
 
 		return null;
 	}

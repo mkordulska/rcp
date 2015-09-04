@@ -2,8 +2,10 @@ package com.starterkit.rcp.view;
 
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
@@ -20,8 +22,12 @@ public class DoneView extends ViewPart {
 		
 		ListViewer listViewer = new ListViewer(parent, SWT.BORDER | SWT.V_SCROLL);
 		List list = listViewer.getList();
-		// TODO Auto-generated method stub
 
+		 MenuManager menuManager = new MenuManager();
+		 Menu menu = menuManager.createContextMenu(list);
+		 list.setMenu(menu);
+		 getSite().registerContextMenu(menuManager, listViewer);
+		    getSite().setSelectionProvider(listViewer);
 	}
 
 	@Override

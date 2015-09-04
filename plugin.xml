@@ -68,12 +68,32 @@
             id="com.starterkit.rcp.view.command1"
             name="Task">
       </command>
+      <command
+            id="com.starterkit.rcp.view.command2"
+            name="Edit">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="com.starterkit.view.handlers.MyAction"
+            class="com.starterkit.view.handlers.AddTask"
             commandId="com.starterkit.rcp.view.command1">
+      </handler>
+      <handler
+            class="com.starterkit.view.handlers.EditToDoView"
+            commandId="com.starterkit.rcp.view.command2">
+      </handler>
+      <handler
+            class="com.starterkit.view.handlers.DeleteToDoView"
+            commandId="com.starterkit.rcp.view.command3">
+      </handler>
+      <handler
+            class="com.starterkit.view.handlers.ChangePrioritetToDoView"
+            commandId="com.starterkit.rcp.view.command4">
+      </handler>
+      <handler
+            class="com.starterkit.view.handlers.DeleteDoneView"
+            commandId="com.starterkit.rcp.view.command5">
       </handler>
    </extension>
    <extension
@@ -89,6 +109,34 @@
                   style="push">
             </command>
          </menu>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:com.starterkit.rcp.view.view1">
+         <command
+               commandId="com.starterkit.rcp.view.command2"
+               label="Edit"
+               style="push">
+         </command>
+         <command
+               commandId="com.starterkit.rcp.view.command3"
+               label="Delete"
+               style="push">
+         </command>
+         <command
+               commandId="com.starterkit.rcp.view.command4"
+               label="Change prioritet"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:com.starterkit.rcp.view.view2">
+         <command
+               commandId="com.starterkit.rcp.view.command5"
+               label="Delete"
+               style="push">
+         </command>
       </menuContribution>
    </extension>
 

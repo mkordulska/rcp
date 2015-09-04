@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.part.ViewPart;
@@ -17,11 +18,13 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.observable.list.WritableList;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.databinding.viewers.ViewerSupport;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
@@ -45,6 +48,7 @@ public class ToDoView extends ViewPart {
 
 	@Override
 	public void createPartControl(Composite parent) {
+		
 		parent.setLayout(new GridLayout(1, false));
 		
 		final TableViewer tableViewer = new TableViewer(parent, SWT.BORDER | SWT.FULL_SELECTION);
@@ -52,10 +56,17 @@ public class ToDoView extends ViewPart {
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		table.setHeaderVisible(true);
 		
+		
+		 MenuManager menuManager = new MenuManager();
+		 Menu menu = menuManager.createContextMenu(table);
+		 table.setMenu(menu);
+		 getSite().registerContextMenu(menuManager, tableViewer);
+		    getSite().setSelectionProvider(tableViewer);
+		
 		TableViewerColumn tableViewerColumn_0 = new TableViewerColumn(tableViewer, SWT.NONE);
 		TableColumn tblclmnDone = tableViewerColumn_0.getColumn();
 		tblclmnDone.setWidth(50);
-		tblclmnDone.setText("Done");
+		tblclmnDone.setText("Prioritet");
 		tableViewerColumn_0.setLabelProvider(new ColumnLabelProvider() {
 	        @Override
 	        public Image getImage(Object element) {
@@ -143,7 +154,11 @@ public class ToDoView extends ViewPart {
 						
 					@Override
 					public void widgetSelected(SelectionEvent e) {
-						// TODO Auto-generated method stub
+						if(!tableViewer.getSelection().isEmpty()) {
+							IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
+							Task task = (Task) selection.getFirstElement();
+							ModelProvider.INSTANCE.removeTask(task);
+							}
 					}
 					
 					@Override
@@ -173,9 +188,9 @@ public class ToDoView extends ViewPart {
 		tableViewer.setContentProvider(ArrayContentProvider.getInstance());
 		tableViewer.setInput(ModelProvider.INSTANCE.getTasks());
 		
-		input=new WritableList(ModelProvider.INSTANCE.getTasks(), Task.class);
-		tableViewer.setInput(input);
-		ViewerSupport.bind(tableViewer,input,BeanProperties.values(new String[] { "done", "task" }));
+//		input=new WritableList(ModelProvider.INSTANCE.getTasks(), Task.class);
+//		tableViewer.setInput(input);
+//		ViewerSupport.bind(tableViewer,input,BeanProperties.values(new String[] { "done", "task" }));
 	}
 
 	@Override
